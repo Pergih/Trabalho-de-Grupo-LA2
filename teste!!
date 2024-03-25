@@ -1,5 +1,0 @@
-oi!
-
-concatenarLista :: [[a]] -> [a]
-concatenarLista [] = []  -- Caso base: lista vazia
-concatenarLista (x:xs) = x ++ concatenarLista xs

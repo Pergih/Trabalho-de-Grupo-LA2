@@ -37,14 +37,6 @@ codigo.zip: $(SRCS) $(INCS)
 	@echo "Criando arquivo zip com os arquivos fonte e de inclusão"
 	@zip -9r $@ $(SRCS) $(INCS) $(INCS_WITH_DIRS)
 
-
-
-
-
-
-
-
-
 # output do executavel
 
 TARGET = cards

@@ -5,11 +5,16 @@ CFLAGSI = -I/home/pergih/Code/sChool/CC105/include   # Adicionar o diretório de
 
 # Diretório dos arquivos fonte
 SRC_DIR = src
+INC_DIR = include
+
+# Adiciona o diretório base aos arquivos de inclusão
+INCS_WITH_DIRS := $(patsubst $(INC_DIR)/%,%,$(INCS))
 
 # Diretório de saída
 BUILD_DIR = build
 
 # Lista de arquivos fonte
+INCS := $(wildcard $(INC_DIR)/*.h)
 SRCS := $(wildcard $(SRC_DIR)/*.c)
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
@@ -28,9 +33,9 @@ check:
 	@cppcheck --enable=all --suppress=missingIncludeSystem $(CFLAGSI) .
 
 # Cria um arquivo zip com os arquivos fonte
-codigo.zip: $(SRCS) $(wildcard /home/pergih/Code/sChool/CC105/include/*.h)
+codigo.zip: $(SRCS) $(INCS)
 	@echo "Criando arquivo zip com os arquivos fonte e de inclusão"
-	@zip -9r $@ $(SRCS) $(patsubst /home/pergih/Code/sChool/CC105/include/%, include/%, $(wildcard /home/pergih/Code/sChool/CC105/include/*.h))
+	@zip -9r $@ $(SRCS) $(INCS) $(INCS_WITH_DIRS)
 
 
 

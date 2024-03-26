@@ -1,23 +1,48 @@
 # Makefile é script para compilar tudo junto de uma vez, em vez de estar a compilar cada ficheiro
 
-CFLAGS = -Wall -Wextra -pedantic-errors 
-CFLAGSI = -I/home/pergih/Code/sChool/CC105/include   # Add o diretório de inclusão
+CFLAGS = -Wall -Wextra -pedantic -O2
+CFLAGSI = -I/home/pergih/Code/sChool/CC105/include   # Adicionar o diretório de inclusão
 
-# diretoria do src
-
+# Diretório dos arquivos fonte
 SRC_DIR = src
 
-# diretoria do output
-
+# Diretório de saída
 BUILD_DIR = build
 
 # Lista de arquivos fonte
 SRCS := $(wildcard $(SRC_DIR)/*.c)
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
+# Imprime a complexidade das funções
+complexidade:
+	@echo "Only printing when Modified McCabe Cyclomatic Complexity is above 5"
+	@echo | pmccabe -v
+	@for file in $(SRCS); do \
+		echo "Complexidade do arquivo $$file:"; \
+		pmccabe $$file | awk '{if($$1 > 5) print}' | sort -nr; \
+		echo "------------------------"; \
+	done
+# Verifica o código em busca de problemas
+check:
+	@echo "Verificar o código em busca de problemas"
+	@cppcheck --enable=all --suppress=missingIncludeSystem $(CFLAGSI) .
+
+# Cria um arquivo zip com os arquivos fonte
+codigo.zip: $(SRCS) $(wildcard /home/pergih/Code/sChool/CC105/include/*.h)
+	@echo "Criando arquivo zip com os arquivos fonte e de inclusão"
+	@zip -9r $@ $(SRCS) $(patsubst /home/pergih/Code/sChool/CC105/include/%, include/%, $(wildcard /home/pergih/Code/sChool/CC105/include/*.h))
+
+
+
+
+
+
+
+
+
 # output do executavel
 
-TARGET = final
+TARGET = cards
 
 # compilar tudo (exceto o clean)
 all: $(TARGET)
@@ -33,8 +58,9 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(BUILD_DIR)
 	gcc $(CFLAGS) $(CFLAGSI) -c $< -o $@
 
-
-# remover os .o
+# Remove os arquivos .o e o executável
 clean:
-	@echo "A remover todos ficheiros exceto src"
-	rm -rf $(BUILD_DIR)
+	@echo "A remover os temporarios e o zip"
+	@rm -rf $(BUILD_DIR) $(TARGET) codigo.zip
+
+

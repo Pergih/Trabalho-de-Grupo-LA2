@@ -31,19 +31,26 @@ int compare(const void *a, const void *b) {
     }
 }
 
-// Function to sort an array of wchar_t using qsort
+// funcao para chamar o qsort com o novo compare
 void sortCartas(wchar_t *s, size_t n) {
-    // Call qsort to sort the array
     qsort(s, n, sizeof(wchar_t), compare);
 }
 
 int DSequencia (wchar_t *s) {
     setlocale(LC_CTYPE, "C.UTF-8");
-    int r = 0;
-    wprintf (L"%ls\n", s);
-    
-    
-    
+    int r = 0; // o int que vai dar return
+    int c = 1; // condição para o loop
+    int l = wcslen(s);
+
+    //verifica se a dupla sequencia tem pelo menos 6, pq e o minimo
+    if (l < 6) c = 0;
+
+
+    int i;
+    for (i = 0; i < l && c != 0; i += 2) { // neste loop vai verificar em cada posição par e o proximo
+        if (s[i]%16 == s[i+1]%16) r++;     // se são iguais em termos de numeros e não de naipe
+        else c = 0;                        // o C é uma codição para acabar o loop mais cedo
+    }
     
     return r;
 }

@@ -1,1 +1,1 @@
-void pedro ();
+int DSequencia (wchar_t *s);

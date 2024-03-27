@@ -1,1 +1,1 @@
-int conjunto(wchar_t *s);
+int conjunto(wchar_t *s); //sasasasasasasasasasasasa

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <wchar.h>
 #include <locale.h>
+#include <stdlib.h>
 #include "Pedro.h"
 #include "Ze.h"
 #include "Joao.h"
@@ -20,6 +21,7 @@ int main () {
 
     while (n > 0){
         wscanf (L"%ls", s);
+        sortCartas (s, wcslen(s));
         DSequencia (s);
 
 

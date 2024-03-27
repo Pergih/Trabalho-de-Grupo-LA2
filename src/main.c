@@ -17,12 +17,14 @@ int main () {
     wscanf(L"%d", &n);   
 
     wchar_t s[100];
+    wchar_t sorted[100];
+    wcscpy (sorted, s);
 
 
     while (n > 0){
         wscanf (L"%ls", s);
-        sortCartas (s, wcslen(s));
-        DSequencia (s);
+        sortCartas (sorted, wcslen(s));
+        DSequencia (sorted);
 
 
         n--;

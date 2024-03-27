@@ -1,11 +1,12 @@
 # Makefile é script para compilar tudo junto de uma vez, em vez de estar a compilar cada ficheiro
 
 CFLAGS = -Wall -Wextra -pedantic -O2
-CFLAGSI = -I/home/pergih/Code/sChool/CC105/include   # Adicionar o diretório de inclusão
 
 # Diretório dos arquivos fonte
 SRC_DIR = src
 INC_DIR = include
+
+CFLAGSI := -I$(INC_DIR) # Adicionar o diretório de inclusão
 
 # Adiciona o diretório base aos arquivos de inclusão
 INCS_WITH_DIRS := $(patsubst $(INC_DIR)/%,%,$(INCS))

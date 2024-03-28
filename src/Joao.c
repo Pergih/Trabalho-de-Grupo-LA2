@@ -17,7 +17,7 @@ int Sequencia(wchar_t *s)
     int i;
     for (i = 0; i < l && c != 0; i++)
     { // neste loop vai verificar se na mão ordenada a proxima carta é consecutiva da anterior
-        if (wcscmp(s[i + 1], s[i] + 1) == 0)
+        if (s[i + 1] == (s[i] + 1))
             r++;
         else
             c = 0; // o C é uma codição para acabar o loop mais cedo

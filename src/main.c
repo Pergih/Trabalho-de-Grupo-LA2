@@ -31,11 +31,17 @@ int main () {
         short int verificar; //vai verificar e vai ser o numero de cartas
         verificar = DSequencia (sorted); //0 se não for Dupla Sequencia, != 0 se é
         
+        short int verificar_sequencia;
+        verificar_sequencia= Sequencia (sorted);
+        
         if (verificar) {
             wprintf (L"dupla sequência com %d cartas onde a carta mais alta é %lc\n", verificar, (unsigned long) sorted[maior]);
         }
+        if (verificar_sequencia){
+            wprintf(L" sequência com %d cartas onde a carta mais alta é %lc\n", verificar_sequencia, (unsigned long)sorted[maior]);
+        }
 
-        n--;
+            n--;
     }
     
 

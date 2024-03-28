@@ -43,6 +43,7 @@ int main () {
         if (verificar_conjunto) {
             wprintf (L"conjunto com %d cartas onde a carta mais alta é %lc\n", verificar_conjunto, (unsigned long)sorted[maior]);
         }
+        
         if (verificar_dsequencia == 0 && verificar_sequencia == 0 && verificar_conjunto == 0) {
             wprintf(L"Nada!\n");
         }

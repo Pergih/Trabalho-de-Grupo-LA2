@@ -46,7 +46,7 @@ TARGET = cards
 all: $(TARGET)
 
 # final é o .exe com tudo
-$(TARGET): $(BUILD_DIR)/main.o $(BUILD_DIR)/Pedro.o $(BUILD_DIR)/Joao.o # $(BUILD_DIR)/Ze.o $(BUILD_DIR)/Luis.o
+$(TARGET): $(BUILD_DIR)/main.o $(BUILD_DIR)/Pedro.o $(BUILD_DIR)/Joao.o $(BUILD_DIR)/Ze.o
 	@echo "A Linkar e a compilar tudo"
 	gcc $(CFLAGS) $(CFLAGSI) $^ -o $@
 	@chmod +x $@

@@ -1,1 +1,0 @@
-int Conjunto(wchar_t *s);

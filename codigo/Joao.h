@@ -1,1 +1,0 @@
-int Sequencia(wchar_t *s);

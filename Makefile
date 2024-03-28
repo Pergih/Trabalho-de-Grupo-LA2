@@ -4,19 +4,13 @@ CFLAGS = -Wall -Wextra -pedantic -O2
 
 # Diretório dos arquivos fonte
 SRC_DIR = src
-INC_DIR = include
-
-CFLAGSI := -I$(INC_DIR) # Adicionar o diretório de inclusão
-
-# Adiciona o diretório base aos arquivos de inclusão
-INCS_WITH_DIRS := $(patsubst $(INC_DIR)/%,%,$(INCS))
 
 # Diretório de saída
 BUILD_DIR = build
 
 # Lista de arquivos fonte
-INCS := $(wildcard $(INC_DIR)/*.h)
 SRCS := $(wildcard $(SRC_DIR)/*.c)
+INCS := $(wildcard $(SRC_DIR)/*.h)
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
 # Imprime a complexidade das funções
@@ -35,8 +29,9 @@ check:
 
 # Cria um arquivo zip com os arquivos fonte
 codigo.zip: $(SRCS) $(INCS)
-	@echo "Criando arquivo zip com os arquivos fonte e de inclusão"
-	@zip -9r $@ $(SRCS) $(INCS) $(INCS_WITH_DIRS)
+	@echo "A criar arquivo zip com os arquivos fonte"
+	@cd $(SRC_DIR) && zip -9r ../$@ *
+
 
 # output do executavel
 
@@ -46,15 +41,15 @@ TARGET = cards
 all: $(TARGET)
 
 # final é o .exe com tudo
-$(TARGET): $(BUILD_DIR)/main.o $(BUILD_DIR)/Pedro.o $(BUILD_DIR)/Joao.o $(BUILD_DIR)/Ze.o
+$(TARGET): $(BUILD_DIR)/main.o $(BUILD_DIR)/Pedro.o $(BUILD_DIR)/Joao.o $(BUILD_DIR)/Ze.o # $(BUILD_DIR)/Luis.o
 	@echo "A Linkar e a compilar tudo"
-	gcc $(CFLAGS) $(CFLAGSI) $^ -o $@
+	gcc $(CFLAGS) $^ -o $@
 	@chmod +x $@
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo "A compilar o $<"
 	@mkdir -p $(BUILD_DIR)
-	gcc $(CFLAGS) $(CFLAGSI) -c $< -o $@
+	gcc $(CFLAGS) -c $< -o $@
 
 # Remove os arquivos .o e o executável
 clean:

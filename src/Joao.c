@@ -15,13 +15,14 @@ int Sequencia(wchar_t *s)
         c = 0;
 
     int i;
-    for (i = 0; i < l && c != 0; i++)
+    for (i = 0; i < l-1 && c != 0; i++)
     { // neste loop vai verificar se na mão ordenada a proxima carta é consecutiva da anterior
-        if (s[i + 1] == (s[i] + 1))
+        if (s[i + 1]%16 == (s[i]%16 + 1))
             r++;
         else
             c = 0; // o C é uma codição para acabar o loop mais cedo
     }
+    r++; // quando o loop acaba, verifica tambem o ultimo elemento contudo não incrementa
 
-    return r;
+    return c == 0 ? 0 : r;
 }

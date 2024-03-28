@@ -31,6 +31,9 @@ int main () {
         short int verificar_dsequencia; //vai verificar e vai ser o numero de cartas
         verificar_dsequencia = DSequencia (sorted); //0 se não for Dupla Sequencia, != 0 se é
         
+        short int verificar_conjunto;
+        verificar_conjunto = conjunto(sorted);
+
         
         
         if (verificar_dsequencia) {
@@ -42,8 +45,11 @@ int main () {
             wprintf(L"sequência com %d cartas onde a carta mais alta é %lc\n", verificar_sequencia, (unsigned long)sorted[maior]);
         }
 
+        if (verificar_conjunto) {
+            wprintf(L"conjunto com %d cartas onde a carta mais alta é %lc\n", verificar_conjunto, (unsigned long)sorted[maior]);
+        }
 
-        if (verificar_dsequencia == 0 && verificar_sequencia == 0) {
+        if (verificar_dsequencia == 0 && verificar_sequencia == 0 && verificar_conjunto == 0) {
             wprintf(L"Nada!\n");
         }
     }

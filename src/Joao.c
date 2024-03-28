@@ -26,3 +26,4 @@ int Sequencia(wchar_t *s)
 
     return c == 0 ? 0 : r;
 }
+

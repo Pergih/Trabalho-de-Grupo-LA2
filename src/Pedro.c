@@ -43,16 +43,19 @@ int DSequencia (wchar_t *s) {
     int l = wcslen(s);
 
     //verifica se a dupla sequencia tem pelo menos 6, pq e o minimo
-    if (l < 6) c = 0;
+    if (l < 6) return 0;
 
 
-    int i;
-    for (i = 0; i < l && c != 0; i += 2) { // neste loop vai verificar em cada posição par e o proximo
-        if (s[i]%16 == s[i+1]%16) r++;     // se são iguais em termos de numeros e não de naipe
+    
+    if (s[0]%16 == s[1]%16) r++; // verifica se o primeiro par sao iguais
+
+    for (int i = 2; i < l && c != 0; i += 2) {
+        // neste loop vai verificar em cada posição par e o proximo se são iguais em termos de numeros e não de naipe
+        if (s[i]%16 == s[i+1]%16 && (s[i-1]%16) + 1 == s[i]%16) r++; // verificar se sao seguidos
         else c = 0;                        // o C é uma codição para acabar o loop mais cedo
     }
     
-    return r;
+    return c == 0 ? 0 : r;
 }
 
 

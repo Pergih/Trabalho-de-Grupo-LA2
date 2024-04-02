@@ -2,9 +2,8 @@
 #include <wchar.h>
 #include <locale.h>
 #include <stdlib.h>
-#include "Pedro.h"
-#include "Ze.h"
-#include "Joao.h"
+#include "Combinacao.h"
+#include "Sort.h"
 
 
 

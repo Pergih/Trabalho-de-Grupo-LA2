@@ -3,9 +3,6 @@
 #include <locale.h>
 #include <stdlib.h>
 
-#define MAX_COLS 100
-
-
 // Função Compare para o qsort
 int compare(const void *a, const void *b) {
     const wchar_t wchar_a = *(const wchar_t *)a;
@@ -38,19 +35,6 @@ int compare(const void *a, const void *b) {
 void sortCartas(wchar_t *s, size_t n) {
     qsort(s, n, sizeof(wchar_t), compare);
 }
-
-void find_indices(wchar_t m[], int N, short int v[]) {
-    wchar_t temp[N];
-    wcscpy (temp, m);
-
-    sortCartas (temp, N);
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++){
-            if (temp[N-i-1] == m[j]) v[i] = j; // vai guardar o indice do maior
-        }
-    }
-}
-
 
 
 

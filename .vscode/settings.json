@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "wchar.h": "c",
-        "luis.h": "c"
+        "luis.h": "c",
+        "stdio.h": "c"
     }
 }

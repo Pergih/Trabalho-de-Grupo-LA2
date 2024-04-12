@@ -4,5 +4,6 @@
         "luis.h": "c",
         "stdio.h": "c",
         "locale.h": "c"
-    }
+    },
+    "cmake.configureOnOpen": false
 }

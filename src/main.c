@@ -9,7 +9,7 @@
 
 
 
-void verificaComMesa(wchar_t *mesa);
+void verificaComMesa(wchar_t *mesa, wchar_t *mao);
 void testa(int testNumber);
 void removeJogada (wchar_t *mao, wchar_t *jogada);
 int validaJogada (wchar_t *jogada);
@@ -31,33 +31,20 @@ int main() {
 
 void testa(int testNumber) {
     wprintf(L"Teste %d\n", testNumber); //print o numero do teste
-    int c = 0;
-    int numPlays;
-    wscanf(L"%d", &numPlays); // Numero de mãos/jogadas ANTERIORES
     
     wchar_t mao[100]; // a mao do jogador
-    wchar_t sorted[100];
-    wscanf(L"%ls", mao);
-    sortCartas (mao, wcslen(mao)); // fica sorted
-    
-    wcscpy (sorted, mao);
-    
-    wchar_t mesa[100];
 
-    verificaComMesa(mesa);
+    wchar_t mesa[100];
+    verificaComMesa(mesa, mao);
     
+
     wprintf(L"%ls ULTIMA STRING!!!\n",mesa);
 
     wchar_t jogada[100];
     wscanf (L"%ls", jogada);
     sortCartas (jogada, wcslen(jogada));
     if (wcscmp (jogada, L"PASSO") != 0 && validaJogada (jogada) && jogada[0] != L'\0' && contemCartas (mao, jogada))removeJogada (mao, jogada); // jogada final
-    else c = 0; // flag q o ultimo n foi possivel
 
-    
-    if (c == 0) {
-        wcscpy (mao, sorted);
-    }
     printMao (mao);
 }
 
@@ -97,23 +84,26 @@ int validaJogada (wchar_t *jogada) {
 
 
 
-void verificaComMesa(wchar_t *mesa) //isto aqui ja se pressupoe que a jogada é valida
+void verificaComMesa(wchar_t *mesa, wchar_t *mao) //isto aqui ja se pressupoe que a jogada é valida
 {
     int numP; //numero de jogadas anteriores 
     
-    wchar_t play[100];
 
     wscanf(L"%d", &numP);
 
-    for(int i = 1; i <= numP; i++)
+    wscanf(L"%ls", mao);
+    sortCartas (mao, wcslen(mao)); // fica sorted
+
+    for(int i = 0; i < numP; i++)
     {
-        
+        wchar_t play[100];
         wscanf(L"%ls",play);
-        if(wcscmp(play,L"PASSO\n") != 0)
+        if(wcscmp(play,L"PASSO") != 0)
         {
-         wcscpy(mesa,play);
+            wcscpy(mesa, play);
         }
     }
+    sortCartas (mesa, wcslen(mesa));
 
 }
 

@@ -9,7 +9,7 @@
 
 
 
-
+void verificaComMesa(wchar_t *mesa);
 void testa(int testNumber);
 void removeJogada (wchar_t *mao, wchar_t *jogada);
 int validaJogada (wchar_t *jogada);
@@ -31,27 +31,24 @@ int main() {
 
 void testa(int testNumber) {
     wprintf(L"Teste %d\n", testNumber); //print o numero do teste
-    int c = 1;
+    int c = 0;
     int numPlays;
-    wscanf(L"%d", &numPlays); // Numero de mãos/jogadas
+    wscanf(L"%d", &numPlays); // Numero de mãos/jogadas ANTERIORES
     
     wchar_t mao[100]; // a mao do jogador
     wchar_t sorted[100];
     wscanf(L"%ls", mao);
-    sortCartas (mao, wcslen(mao));
+    sortCartas (mao, wcslen(mao)); // fica sorted
     
     wcscpy (sorted, mao);
+    
+    wchar_t mesa[100];
+
+    verificaComMesa(mesa);
+    
+    wprintf(L"%ls ULTIMA STRING!!!\n",mesa);
 
     wchar_t jogada[100];
-    for (int i = 0; i < numPlays; i++){
-
-        wscanf (L"%ls", jogada);
-
-        // verificar se jogou no turno errado e verificar se esta a ver a ultima jogada ou n
-        sortCartas (jogada, wcslen(jogada));
-        if (wcscmp (jogada, L"PASSO") != 0 && validaJogada (jogada) && jogada[0] != L'\0' && contemCartas (mao, jogada))removeJogada (mao, jogada);
-    }    
-    
     wscanf (L"%ls", jogada);
     sortCartas (jogada, wcslen(jogada));
     if (wcscmp (jogada, L"PASSO") != 0 && validaJogada (jogada) && jogada[0] != L'\0' && contemCartas (mao, jogada))removeJogada (mao, jogada); // jogada final
@@ -94,17 +91,31 @@ void removeJogada(wchar_t *mao, wchar_t *jogada) {
 }
 
 int validaJogada (wchar_t *jogada) {
-    if ((Conjunto(jogada) == 0 && DSequencia (jogada) == 0 && Sequencia (jogada) == 0)|| Repetidas(jogada)) return 0;
+    if ((Conjunto(jogada) == 0 && DSequencia (jogada) == 0 && Sequencia (jogada) == 0)) return 0;
     else return 1;
 }
 
-int Repetidas (wchar_t *s) { // retorna 1 se existir repetidas
-    for (int i = 0; s[i+1] != L'\0'; i++) {
-        if (s[i] == s[i+1]) return 1; // repetiu-se
-    }
-    return 0; // nao existe repetida
-}
 
+
+void verificaComMesa(wchar_t *mesa) //isto aqui ja se pressupoe que a jogada é valida
+{
+    int numP; //numero de jogadas anteriores 
+    
+    wchar_t play[100];
+
+    wscanf(L"%d", &numP);
+
+    for(int i = 1; i <= numP; i++)
+    {
+        
+        wscanf(L"%ls",play);
+        if(wcscmp(play,L"PASSO\n") != 0)
+        {
+         wcscpy(mesa,play);
+        }
+    }
+
+}
 
 int contemCartas(wchar_t *mao, wchar_t *jogada) {
     int i, j, contem;

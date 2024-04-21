@@ -235,3 +235,57 @@ void verificaJogadaFinal (wchar_t *mao, wchar_t *jogada, wchar_t *mesa) {
     return;
 }
 
+
+// esta funçao aqui ja é pro guiao 4 é a aquela funçao que determina o conjunto.
+
+int combinaConjuntos(int mesa, int mao, wchar_t* cartas){ //funçao horrivel!!! basicamente vem daquele 'brute forcing' que fizemos dia 19; 
+                                                                //NOTA: o array tem que ter como primeiro indice o a primeira carta do conjunto!;
+
+    if(mao == 0 || mesa == 0 || mesa > mao) return 0; //aqui logo elimina todos os casos impossiveis;
+
+    if(mesa == 1){
+        for(int i = 0; i < mao; i++){
+            wprintf(L"%lc\n",cartas[i]);
+            return 1;
+        }
+    }
+    if(mesa == 2){
+        if(mao == 2){
+            wprintf(L"%lc %lc\n",cartas[0],cartas[1]);
+        }
+        if(mao == 3){
+            wprintf(L"%lc %lc\n",cartas[0],cartas[1]);
+            wprintf(L"%lc %lc\n",cartas[0],cartas[2]);
+            wprintf(L"%lc %lc\n",cartas[1],cartas[2]);
+        }
+        if(mao == 4){
+            wprintf(L"%lc %lc\n",cartas[0],cartas[1]);
+            wprintf(L"%lc %lc\n",cartas[0],cartas[2]);
+            wprintf(L"%lc %lc\n",cartas[1],cartas[2]);
+            wprintf(L"%lc %lc\n",cartas[0],cartas[3]);
+            wprintf(L"%lc %lc\n",cartas[1],cartas[3]);
+            wprintf(L"%lc %lc\n",cartas[2],cartas[3]);
+            }
+    }
+    if(mesa == 3){
+        if(mao == 3){
+            wprintf(L"%lc %lc %lc\n",cartas[0],cartas[1],cartas[2]);
+        }
+        if(mao == 4){
+            wprintf(L"%lc %lc %lc\n",cartas[0],cartas[1],cartas[2]);
+            wprintf(L"%lc %lc %lc\n",cartas[0],cartas[1],cartas[3]);
+            wprintf(L"%lc %lc %lc\n",cartas[0],cartas[2],cartas[3]);
+            wprintf(L"%lc %lc %lc\n",cartas[1],cartas[2],cartas[3]);
+        }
+    }
+    if(mesa == 4){
+        wprintf(L"%lc %lc %lc %lc\n",cartas[0],cartas[1],cartas[2],cartas[3]);
+    }
+
+    return 1; //acaba a funçao gg ;
+}
+
+
+ 
+
+

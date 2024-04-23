@@ -246,7 +246,7 @@ int combinaConjuntos(int mesa, int mao, wchar_t* cartas){ //funçao horrivel!!! 
     if(mesa == 1){
         for(int i = 0; i < mao; i++){
             wprintf(L"%lc\n",cartas[i]);
-            return 1;
+            
         }
     }
     if(mesa == 2){

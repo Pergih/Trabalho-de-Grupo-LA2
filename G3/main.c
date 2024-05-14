@@ -8,10 +8,10 @@
 // output do exemplo de input 4 e 3 teste 2 tao errados
 
 
-
-void verificaComMesa(wchar_t *mesa, wchar_t *mao);
+void testa2(int number, int *testNumber);
+void verificaComMesa(wchar_t *mesa, wchar_t *mao, int numP);
 int verificaJogada (wchar_t *mesa, wchar_t *jogada);
-void testa(int testNumber);
+void testa(int *testNumber);
 void removeJogada (wchar_t *mao, wchar_t *jogada);
 int validaJogada (wchar_t *jogada);
 int Repetidas (wchar_t *s);
@@ -26,27 +26,78 @@ int main() {
     wscanf(L"%d", &numTests); //Numero de testes
 
     for (int i = 1; i <= numTests; i++) {
-        testa(i);
+        testa(&i);
     }
 
     return 0;
 }
 
-void testa(int testNumber) {
-    wprintf(L"Teste %d\n", testNumber); //print o numero do teste
+void testa(int *testNumber) {
+    wprintf(L"Teste %d\n", *testNumber); //print o numero do teste
     
     wchar_t mao[14]; // a mao do jogador
 
+
+    int numP; //numero de jogadas anteriores 
+    wscanf(L"%d", &numP);
     wchar_t mesa[28];
-    verificaComMesa(mesa, mao);
+    verificaComMesa(mesa, mao, numP);
+    
+
+
 
     wchar_t jogada[28];
     wscanf (L"%ls", jogada);
-    sortCartas (jogada, wcslen(jogada));
+
+    wchar_t *endptr;
+    long number = wcstol(jogada, &endptr, 10);
+
+    if (number != 0) {
+        wcsncpy (jogada, L"PASSO", 5);
+    }
+    else sortCartas (jogada, wcslen(jogada));
+
     verificaJogadaFinal (mao, jogada, mesa);
 
     printMao (mao);
+    if (number != 0 && number < 200) {
+        *testNumber = *testNumber + 1;
+        testa2(number, testNumber);
+    }
 }
+
+void testa2(int number, int *testNumber) {
+    wprintf(L"Teste %d\n", *testNumber); //print o numero do teste
+    
+    wchar_t mao[28];
+    wchar_t mesa[28];
+    verificaComMesa(mesa, mao, number);
+    
+
+
+
+    wchar_t jogada[28];
+    wscanf (L"%ls", jogada);
+
+    wchar_t *endptr;
+    number = wcstol(jogada, &endptr, 10);
+
+    if (number != 0) {
+        wcsncpy (jogada, L"PASSO", 5);
+    }
+    else sortCartas (jogada, wcslen(jogada));
+
+    verificaJogadaFinal (mao, jogada, mesa);
+
+    printMao (mao);
+    if (number != 0 && number < 200) {
+        *testNumber = *testNumber + 1;
+        testa2(number, testNumber);
+    }
+
+
+}
+
 
 void removeJogada(wchar_t *mao, wchar_t *jogada) {
     wchar_t resultado[28]; // Array para armazenar a mao resultante apos a remoção
@@ -84,13 +135,10 @@ int validaJogada (wchar_t *jogada) {
 
 
 
-void verificaComMesa(wchar_t *mesa, wchar_t *mao) //isto aqui ja se pressupoe que a jogada é valida
+void verificaComMesa(wchar_t *mesa, wchar_t *mao, int numP) //isto aqui ja se pressupoe que a jogada é valida
 {
     mesa[0] = '\0';
-    int numP; //numero de jogadas anteriores 
     
-
-    wscanf(L"%d", &numP);
 
     wscanf(L"%ls", mao);
     sortCartas (mao, wcslen(mao)); // fica sorted
@@ -105,7 +153,7 @@ void verificaComMesa(wchar_t *mesa, wchar_t *mao) //isto aqui ja se pressupoe qu
     {
         wscanf(L"%ls",play);
         int t = wcscmp(play, L"PASSO");
-
+        
         if (t == 0) c++; // se é passo
         
         else if(verificaJogada (mesa, play) == 1) // se for valida
@@ -115,11 +163,15 @@ void verificaComMesa(wchar_t *mesa, wchar_t *mao) //isto aqui ja se pressupoe qu
         }
         if (c == 3) mesa[0] = L'\0'; // se passou 3 vezes a mesa fica livre
         
-        if (verificaJogada (mesa, play) == 0 && t == 0) {
+        else if (verificaJogada (mesa, play) == 0 && t == 0) {
             c++;
         }
-        if (c == 4) return;
+        else if (c == 4) {
+            return;
+        }
     }
+
+    
     
     if (numP == 0 || c == 3)mesa[0] = L'\0';
     else sortCartas (mesa, wcslen(mesa));
@@ -171,7 +223,7 @@ int verificaJogada (wchar_t *mesa, wchar_t *jogada) {
     if (wcscmp (jogada, L"PASSO") == 0) return 1;
     sortCartas (jogada, wcslen (jogada));
     if (validaJogada (jogada) == 0) return 0;
-    if (conjuntoRei(mesa) == 0 && sameType(jogada, mesa)) { // se nao for um conjunto de rei e se forem do mesmo tipo
+    if ((conjuntoRei(mesa) == 0 && sameType(jogada, mesa)) || ((conjuntoRei (mesa) && conjuntoRei (jogada)))) { // se nao for um conjunto de rei e se forem do mesmo tipo
         return 1;
     }
     else if (mesa[0] == L'\0') {
@@ -203,7 +255,7 @@ int verificaJogada (wchar_t *mesa, wchar_t *jogada) {
 
 void verificaJogadaFinal (wchar_t *mao, wchar_t *jogada, wchar_t *mesa) {
     if (validaJogada (jogada) == 0) return;
-    else if (((conjuntoRei(mesa) == 0 && sameType(jogada, mesa)) && compare (&jogada[wcslen(jogada) - 1], &mesa[wcslen(mesa) - 1]) > 0) || mesa[0] == L'\0' || wcscmp (jogada, L"PASSO") == 0) { // se nao for um conjunto de rei e se forem do mesmo tipo
+    else if (((conjuntoRei(mesa) == 0 && sameType(jogada, mesa)) && compare (&jogada[wcslen(jogada) - 1], &mesa[wcslen(mesa) - 1]) > 0) || mesa[0] == L'\0' || wcscmp (jogada, L"PASSO") == 0 || (conjuntoRei (mesa) && conjuntoRei (jogada))) { // se nao for um conjunto de rei e se forem do mesmo tipo
         removeJogada (mao, jogada);
         return;
     }
